@@ -109,9 +109,7 @@ GitHub.sublime-settings
 
 # Visual Studio Code #
 .vscode/*
-
-# ! -> must go
-!.vscode/settings.json 
+!.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
@@ -130,7 +128,3 @@ gunicorn-error-log
 db.sqlite3
 db copy.sqlite3
 static/
-!recipes/static
-
-# Add again for course purpose
-!db.sqlite3
