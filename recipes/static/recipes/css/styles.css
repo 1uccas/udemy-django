@@ -276,6 +276,21 @@ body {
     filter: brightness(.8);
 }
 
+
+/* Generics */
+
+.center {
+  text-align: center;
+}
+
+.m-x {
+  margin: 0 var(--spacing-gutter-medium);
+}
+
+.m-y {
+  margin: var(--spacing-gutter-medium) 0;
+}
+
 .preparation-steps h1,
 .preparation-steps h2,
 .preparation-steps h3,

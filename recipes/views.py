@@ -5,7 +5,7 @@ from django.http import Http404
 
 def home(request):
     recipes = Recipe.objects.filter(
-            is_published=True
+            is_published=True,
         ).order_by('-id')
     return render(request, "recipes/pages/home.html", context={
         'recipes': recipes,
