@@ -35,4 +35,12 @@ class RecipeViewsTest(TestCase):
         ! Or vice versa (response.content.decode(utf-8) -> byte to String)
 
         '''
+    
+    def test_recipe_404_when_it_does_not_exist(self):
+        response = self.client.get(reverse('recipes:recipe', kwargs={'id': 999}))
+        self.assertEqual(response.status_code, 404)
+    
+    def test_category_404_when_it_does_not_exist(self):
+        response = self.client.get(reverse('recipes:category', kwargs={'category_id': 999}))
+        self.assertEqual(response.status_code, 404)
         
