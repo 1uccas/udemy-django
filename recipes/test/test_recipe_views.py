@@ -21,15 +21,15 @@ class RecipeViewsTest(TestCase):
         
     '''Create category, recipe and author; insert data in database and test yours templates '''    
     def test_recipe_home_template_loads_recipes(self): # Criar uma categoria e testar o template
-        category = Category.objects.create(name='category') # Criei uma categoria e salvei no db
-        author = User.objects.create_user( # Criei um author e inseri no banco de dados
+        category = Category.objects.create(name='category') # Criei uma categoria
+        author = User.objects.create_user( # Criei um author
             first_name='first_name',
             last_name='last_name',
             username='username',
             password='123456',
             email='email@teste.com',
         )
-        recipe = Recipe.objects.create( #Criei um Recipe e inseri no banco de dados
+        recipe = Recipe.objects.create( #Criei um Recipe
             category=category,
             author=author,
             title = 'Recipe Title',
@@ -44,7 +44,18 @@ class RecipeViewsTest(TestCase):
             is_published = True,
         )
         #pdb.set_trace() # 'breakpoint()' will be stopped here
-        assert 1 == 1
+        ...
+        response = self.client.get(reverse('recipes:home'))
+        self.assertIn(('Recipe Title').encode('utf-8'), response.content)
+        self.assertIn(('Recipe Description').encode('utf-8'), response.content)
+        
+        self.assertEqual(len(response.context['recipes']), 1)
+        '''
+        analyze whether the creation of objects was successful
+        We return the number of items from response.context['recipes']
+        If response.context == 0 -> Fail (no collection of objects is being passed to the context);
+        Else -> Pass (there is a collection of objects being passed to the context)
+        '''
         
     def test_recipe_home_view_returns_status_code_200_OK(self):
         response = self.client.get(reverse('recipes:home'))
