@@ -18,12 +18,12 @@ class RecipeViewsTest(TestRecipesBase):
     def test_recipe_recipes_view_function_is_correct(self):
         view = resolve(reverse('recipes:recipe', kwargs={'id': 1}))
         self.assertIs(view.func, views.recipe)
-        
-    '''Create category, recipe and author; insert data in database and test yours templates '''    
-    def test_recipe_home_template_loads_recipes(self): # Create a category and test the template
+           
+    def test_recipe_home_template_loads_recipes(self):
+        self.make_recipe()
         response = self.client.get(reverse('recipes:home'))
         self.assertIn(('Recipe Title').encode('utf-8'), response.content)
-        self.assertIn(('Recipe Description').encode('utf-8'), response.content)
+        self.assertIn(('description').encode('utf-8'), response.content)
         
         self.assertEqual(len(response.context['recipes']), 1)
         '''
@@ -42,7 +42,6 @@ class RecipeViewsTest(TestRecipesBase):
         self.assertTemplateUsed(response, 'recipes/pages/home.html')
         
     def test_recipe_not_found_no_receipes_template(self):
-        Recipe.objects.get(id=1).delete() #delete id equals 1
         response = self.client.get(reverse('recipes:home')) #peguei o conteudo da página home
         self.assertIn(("<h1>No recipes found here 🥲</h1>").encode("utf-8"), response.content, "Error: HTML found")
         
