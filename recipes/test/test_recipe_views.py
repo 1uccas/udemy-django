@@ -1,6 +1,7 @@
 from django.urls import reverse, resolve
 from .test_recipes_base import TestRecipesBase
 from recipes.models import Category, User, Recipe
+import unittest # skip and fail
 
 import pdb # import debugger
 
@@ -40,7 +41,7 @@ class RecipeViewsTest(TestRecipesBase):
     def test_recipe_home_view_loads_correct_template(self):
         response = self.client.get(reverse('recipes:home'))
         self.assertTemplateUsed(response, 'recipes/pages/home.html')
-        
+    
     def test_recipe_not_found_no_receipes_template(self):
         response = self.client.get(reverse('recipes:home')) #peguei o conteudo da página home
         self.assertIn(("<h1>No recipes found here 🥲</h1>").encode("utf-8"), response.content, "Error: HTML found")
