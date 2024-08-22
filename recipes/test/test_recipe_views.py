@@ -40,6 +40,12 @@ class RecipeViewsTest(TestRecipesBase):
         response = self.client.get(reverse('recipes:category', kwargs={'category_id': 1}))
         self.assertIn((varTitle).encode('utf-8'), response.content)
         
+    def test_recipe_recipe_template_loads_recipes(self):
+        varTitle = "This is my title in recipe page"
+        self.make_recipe(title=varTitle)
+        response = self.client.get(reverse('recipes:recipe', kwargs={'id': 1}))
+        self.assertIn((varTitle).encode('utf-8'), response.content)
+        
     def test_recipe_home_view_returns_status_code_200_OK(self):
         response = self.client.get(reverse('recipes:home'))
         self.assertEqual(response.status_code, 200) # -> assertEqual(onde procurar, o que deseja achar)
