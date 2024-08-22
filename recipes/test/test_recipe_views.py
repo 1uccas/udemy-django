@@ -34,6 +34,12 @@ class RecipeViewsTest(TestRecipesBase):
         Else -> Pass (there is a collection of objects being passed to the context)
         '''
         
+    def test_recipe_category_template_loads_recipes(self):
+        varTitle = "This is my category"
+        self.make_recipe(title=varTitle)
+        response = self.client.get(reverse('recipes:category', kwargs={'category_id': 1}))
+        self.assertIn((varTitle).encode('utf-8'), response.content)
+        
     def test_recipe_home_view_returns_status_code_200_OK(self):
         response = self.client.get(reverse('recipes:home'))
         self.assertEqual(response.status_code, 200) # -> assertEqual(onde procurar, o que deseja achar)
