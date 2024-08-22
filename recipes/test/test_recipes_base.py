@@ -46,8 +46,7 @@ class TestRecipesBase(TestCase):
         if var_author == None:
             var_author = {}'''
         
-        Recipe.objects.create(
-            
+        return Recipe.objects.create(
             category=self.make_category(),
             author=self.make_author(),
             title = title,
