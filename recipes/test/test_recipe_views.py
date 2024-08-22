@@ -34,6 +34,11 @@ class RecipeViewsTest(TestRecipesBase):
         Else -> Pass (there is a collection of objects being passed to the context)
         '''
         
+    def test_recipe_home_template_is_published_False(self):
+        self.make_recipe(is_published=False)
+        response = self.client.get(reverse('recipes:home'))
+        self.assertIn(('<h1>No recipes found here 🥲</h1>').encode('utf-8'), response.content)
+        
     def test_recipe_category_template_loads_recipes(self):
         varTitle = "This is my category"
         self.make_recipe(title=varTitle)
