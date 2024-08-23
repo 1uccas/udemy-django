@@ -22,11 +22,12 @@ class RecipeModelTest(TestRecipesBase):
                 ('servings_unit', 65),
             ]
         for fild, max_legth in filds:
-            # permite modificar ou adicionar atributos a objetos dinamicamente durante a execução do programa
-            setattr(self.recipe, fild, 'A' * (max_legth + 1))
-            
-            with self.assertRaises(ValidationError): #Try catch (chamada de exceção)
-                self.recipe.full_clean()
+            with self.subTest(fild=fild, max_legth=max_legth):
+                # permite modificar ou adicionar atributos a objetos dinamicamente durante a execução do programa
+                setattr(self.recipe, fild, 'A' * (max_legth + 0))
+                    
+                with self.assertRaises(ValidationError): #Try catch (chamada de exceção)
+                    self.recipe.full_clean()
             
              
         
