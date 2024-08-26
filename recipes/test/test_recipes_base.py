@@ -8,6 +8,21 @@ class TestRecipesBase(TestCase):
     def make_category(self, name='Category'):
         return Category.objects.create(name=name)
     
+    def make_recipe_preparation_steps_is_html_is_false_default(self):
+        recipe = Recipe(
+            category=self.make_category(name="Category Enter"),
+            author=self.make_author(username="Jairzinho Rodrigues"),
+            title='Recipe Title',
+            description='description',
+            slug='slug',
+            preparation_time = 10,
+            preparation_time_unit = 'Minutos',
+            servings = 10,
+            servings_unit = 'Pessoas',
+            preparation_steps = 'Recipes Preparation Steps',
+        )
+        return recipe
+    
     def make_author(
         self, 
         first_name='first_name',
