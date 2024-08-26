@@ -4,6 +4,7 @@ from .test_recipes_base import TestRecipesBase
 
 class RecipeModelTest(TestRecipesBase):
     def setUp(self) -> None:
+        self.category = self.make_category()
         self.recipe = self.make_recipe()
         return super().setUp()
     
@@ -27,4 +28,15 @@ class RecipeModelTest(TestRecipesBase):
         recipe = self.make_recipe_preparation_steps_is_html_is_false_default()
         recipe.full_clean()
         self.assertFalse(recipe.is_published)
+        
+    def test_category_fields_max_lenght(self):
+        setattr(self.category, 'name', 'A' * (66))
+        with self.assertRaises(ValidationError):
+            self.category.full_clean()
+            
+    def test_recipe_string_represetation(self):
+        title = "This is just one test"
+        self.recipe.title = title
+        self.recipe.full_clean()
+        self.assertEqual(self.recipe.title, title, msg=f"<Error?> {self.recipe.title} != {title}")
         
