@@ -38,5 +38,6 @@ class RecipeModelTest(TestRecipesBase):
         title = "This is just one test"
         self.recipe.title = title
         self.recipe.full_clean()
-        self.assertEqual(self.recipe.title, title, msg=f"<Error?> {self.recipe.title} != {title}")
+        self.recipe.save()
+        self.assertEqual(str(self.recipe.title), title, msg=f"<Error?> {self.recipe.title} != {title}")
         
