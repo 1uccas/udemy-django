@@ -14,7 +14,7 @@ class TestRecipesBase(TestCase):
             author=self.make_author(username="Jairzinho Rodrigues"),
             title='Recipe Title',
             description='description',
-            slug='slug',
+            slug='slug-for-no-defaults',
             preparation_time = 10,
             preparation_time_unit = 'Minutos',
             servings = 10,
