@@ -50,8 +50,11 @@ def search(request):
         raise Http404()
     
     recipe = Recipe.objects.filter(
-        Q(title__contains=search_term)|
-        Q(description__contains=search_term)).order_by('-id')
+        Q(
+            Q(title__contains=search_term)|
+            Q(description__contains=search_term)
+        ),
+        is_published=True).order_by('-id')
     
         #(i)contains para ignorar letras maiusculas e minusculas na busca
     
