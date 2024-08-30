@@ -23,3 +23,27 @@ class RecipeSearchViewTest(TestRecipesBase):
     def test_search_caracter_escape(self):
         response = self.client.get(reverse('recipes:search') + '?q=<script><h1>Test</h1></script>')
         self.assertIn(("&quot;&lt;script&gt;&lt;h1&gt;Test&lt;/h1&gt;&lt;/script&gt;&quot;").encode('utf-8'), response.content)
+        
+    def test_recipe_search_can_find_recipe_by_title(self):
+        TermSearchNoFind = 'Chocolate Cake'
+        DescriptionSearchNoFind = 'The cool chocolate cake with orange'
+        
+        TermSearchFind = 'Torta de maçã'
+        DescriptionSearchFind = 'Uma torta muito banaca'
+        
+        self.make_recipe(
+            title=TermSearchFind,
+            description=DescriptionSearchFind,
+        )
+        
+        url = reverse('recipes:search')
+        responseFind = self.client.get(url + f'?q={TermSearchFind}')
+        self.assertIn(DescriptionSearchFind.encode('utf-8'), responseFind.content)
+        self.assertIn(TermSearchFind.encode('utf-8'), responseFind.content)
+        
+        self.assertNotIn(TermSearchNoFind.encode('utf-8'), responseFind.content)
+        self.assertNotIn(DescriptionSearchNoFind.encode('utf-8'), responseFind.content)
+        
+        
+        
+        
