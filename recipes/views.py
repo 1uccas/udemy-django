@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 from utils.recipes.factory import make_recipe
+from django.db.models import Q
 from recipes.models import Recipe
 from django.http import Http404
 
@@ -48,7 +49,14 @@ def search(request):
     if not search_term:
         raise Http404()
     
+    recipe = Recipe.objects.filter(
+        Q(title__contains=search_term)|
+        Q(description__contains=search_term)).order_by('-id')
+    
+        #(i)contains para ignorar letras maiusculas e minusculas na busca
+    
     return render(request, "recipes/pages/search.html", context={
         'page_title': f'Search to "{search_term}" in',
         'search_found': search_term,
+        'recipes': recipe,
     })
