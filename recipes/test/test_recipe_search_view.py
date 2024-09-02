@@ -25,11 +25,11 @@ class RecipeSearchViewTest(TestRecipesBase):
         self.assertIn(("&quot;&lt;script&gt;&lt;h1&gt;Test&lt;/h1&gt;&lt;/script&gt;&quot;").encode('utf-8'), response.content)
         
     def test_recipe_search_can_find_recipe_by_title(self):
-        TermSearchNoFind = 'Chocolate Cake'
-        DescriptionSearchNoFind = 'The cool chocolate cake with orange'
+        TermSearchNoFind = 'This test will not found'
+        DescriptionSearchNoFind = 'Description not found'
         
-        TermSearchFind = 'Torta de maçã'
-        DescriptionSearchFind = 'Uma torta muito banaca'
+        TermSearchFind = 'This test will found'
+        DescriptionSearchFind = 'Desciprtion found'
         
         self.make_recipe(
             title=TermSearchFind,
