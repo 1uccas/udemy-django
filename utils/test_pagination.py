@@ -12,3 +12,27 @@ class PaginationTest(TestCase):
         
         self.assertEqual([1,2,3,4], pagination)
         
+    def test_pagination_more_or_not(self):
+        pagination=make_pagination(
+            page_range=list(range(1,21)),
+            qtd_page=4,
+            current_page=2
+            )
+        
+        self.assertEqual([1,2,3,4], pagination)
+        
+        pagination=make_pagination(
+            page_range=list(range(1,21)),
+            qtd_page=4,
+            current_page=3
+            )
+        
+        self.assertEqual([2,3,4,5], pagination)
+        
+        pagination=make_pagination(
+            page_range=list(range(1,21)),
+            qtd_page=4,
+            current_page=4
+            )
+        
+        self.assertEqual([3,4,5,6], pagination)
