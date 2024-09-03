@@ -15,16 +15,12 @@ def make_pagination(
     # caso o start coloque como positivo caso ele for menor que zero (negativo) ou caso não for
     negative_start = abs(start) if start < 0 else 0
 
-    # caso o retorno do start se torne negativo, torne o start como zero e incremente ao negative_start
+    # caso o retorno do start se torne negativo, torne o start como zero e incremente ao negative_start:
     # end = end + negative_start
    
     if start < 0:
         start = 0
         end += negative_start
-    
-    #set_trace()
-    # current_page = 18 --> [17, 18, 19, 20]
-    # current_page = 20 --> [17, 18, 19, 20]
     
     # se o end for maior ou igual ao total de páginas, realize o seguinte calculo com o start:
     # start recebe start menos (caso for negativo, deixe-o positivo) o calculo de: end menos o total de páginas
