@@ -4,25 +4,14 @@ from django.db.models import Q
 from recipes.models import Recipe
 from django.http import Http404
 from utils.pagination import make_pagination
+from utils.pagination import pagination
 
 def home(request):
     recipes = Recipe.objects.filter(
             is_published=True,
         ).order_by('-id')
     
-    try:
-        current_page = int(request.GET.get('page', 1))
-    except ValueError:
-        current_page = 1
-    
-    paginator = Paginator(recipes, 9)
-    page_obj = paginator.get_page(current_page)
-    
-    pagination_range = make_pagination(
-        paginator.page_range,
-        4,
-        current_page
-    )
+    page_obj, pagination_range = pagination(request, recipes, 9)
     
     return render(request, "recipes/pages/home.html", context={
         'recipes': page_obj,
@@ -37,6 +26,8 @@ def category(request, category_id):
     if not recipes:
         raise Http404('Not Found 404')'''
         
+    page_obj, pagination_range = pagination(request, recipes, 9)
+        
     recipes = get_list_or_404(
         Recipe.objects.filter(
         category__id=category_id, is_published=True
@@ -44,7 +35,8 @@ def category(request, category_id):
     )
     
     return render(request, "recipes/pages/category.html", context={
-        'recipes': recipes,
+        'recipes': page_obj,
+        'pagination_range': pagination_range,
         'title': f'{recipes[0].category.name} - Category'
     })
     
@@ -75,8 +67,12 @@ def search(request):
     
         #(i)contains para ignorar letras maiusculas e minusculas na busca
     
+    page_obj, pagination_range = pagination(request, recipe, 9)
+    
     return render(request, "recipes/pages/search.html", context={
         'page_title': f'Search to "{search_term}" in',
         'search_found': search_term,
-        'recipes': recipe,
+        'recipes': page_obj,
+        'pagination_range': pagination_range,
+        'additional_url_query': f'&q={search_term}',
     })

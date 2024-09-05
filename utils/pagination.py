@@ -1,4 +1,5 @@
 import math
+from django.core.paginator import Paginator
 from pdb import set_trace
 
 def make_pagination(
@@ -42,3 +43,20 @@ def make_pagination(
         'first_page_out_of_range': current_page > middle,
         'last_page_out_of_range': end < total_pages,
     }
+    
+def pagination(request, queryset, per_page, qtd_page=4):
+    try:
+        current_page = int(request.GET.get('page', 1))
+    except ValueError:
+        current_page = 1
+    
+    paginator = Paginator(queryset, per_page)
+    page_obj = paginator.get_page(current_page)
+    
+    pagination_range = make_pagination(
+        paginator.page_range,
+        qtd_page,
+        current_page
+    )
+    
+    return page_obj, pagination_range
