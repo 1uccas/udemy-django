@@ -15,7 +15,7 @@ def home(request):
     except ValueError:
         current_page = 1
     
-    paginator = Paginator(recipes, 10)
+    paginator = Paginator(recipes, 9)
     page_obj = paginator.get_page(current_page)
     
     pagination_range = make_pagination(
