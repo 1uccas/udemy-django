@@ -1,8 +1,11 @@
+from pdb import set_trace
 from unittest import TestCase
-
+from django.urls import reverse
+from recipes.models import Recipe
+from .test_recipes_base import TestRecipesBase
 from utils.pagination import make_pagination
 
-class PaginationTest(TestCase):
+class PaginationTest(TestRecipesBase):
     def test_make_pagination_range_returns_a_pagination_range(self):
         pagination=make_pagination(
             page_range=list(range(1,21)),
@@ -78,3 +81,23 @@ class PaginationTest(TestCase):
         
         self.assertEqual([17,18,19,20], pagination)
         
+    def test_whether_the_page_template_is_being_displayed_correctly(self):
+        title = "Comida de gato"
+        description = "lorem-lorem-lorem-lorem"
+        
+        self.make_recipe(
+            title=title,
+            description=description,
+        )
+        
+        response = self.client.get(reverse('recipes:home'))
+        
+        #title
+        self.assertIn((title).encode(), response.content)
+        
+        #description
+        self.assertIn((description).encode(), response.content)
+        
+        self.assertEqual(len(response.context['recipes']), 1)
+        self.assertEqual(len(response.context['pagination_range']), 9)
+        set_trace()
