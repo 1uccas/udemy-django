@@ -26,13 +26,14 @@ def category(request, category_id):
     if not recipes:
         raise Http404('Not Found 404')'''
         
-    page_obj, pagination_range = pagination(request, recipes, 9)
         
     recipes = get_list_or_404(
         Recipe.objects.filter(
         category__id=category_id, is_published=True
         ).order_by('-id')
     )
+    
+    page_obj, pagination_range = pagination(request, recipes, 9)
     
     return render(request, "recipes/pages/category.html", context={
         'recipes': page_obj,
