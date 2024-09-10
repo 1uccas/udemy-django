@@ -2,6 +2,11 @@ import math
 from django.core.paginator import Paginator
 from pdb import set_trace
 
+# python -c
+# "import string as s;from random import SystemRandom as
+# sr;print(''.join(sr().choices(s.ascii_letters +
+# s.punctuation, k=64)))"
+
 def make_pagination(
     page_range, # interseção de páginas
     qtd_page, # limite por páginas

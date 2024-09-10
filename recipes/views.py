@@ -5,13 +5,17 @@ from recipes.models import Recipe
 from django.http import Http404
 from utils.pagination import make_pagination
 from utils.pagination import pagination
+from dotenv import load_dotenv
+import os
+
+PER_PAGE = int(os.environ.get("PER_PAGE", 6))
 
 def home(request):
     recipes = Recipe.objects.filter(
             is_published=True,
         ).order_by('-id')
     
-    page_obj, pagination_range = pagination(request, recipes, 9)
+    page_obj, pagination_range = pagination(request, recipes, PER_PAGE)
     
     return render(request, "recipes/pages/home.html", context={
         'recipes': page_obj,
@@ -33,7 +37,7 @@ def category(request, category_id):
         ).order_by('-id')
     )
     
-    page_obj, pagination_range = pagination(request, recipes, 9)
+    page_obj, pagination_range = pagination(request, recipes, PER_PAGE)
     
     return render(request, "recipes/pages/category.html", context={
         'recipes': page_obj,
@@ -68,7 +72,7 @@ def search(request):
     
         #(i)contains para ignorar letras maiusculas e minusculas na busca
     
-    page_obj, pagination_range = pagination(request, recipe, 9)
+    page_obj, pagination_range = pagination(request, recipe, PER_PAGE)
     
     return render(request, "recipes/pages/search.html", context={
         'page_title': f'Search to "{search_term}" in',
