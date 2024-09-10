@@ -41,8 +41,8 @@ class TestRecipesBase(TestCase):
         
     def make_recipe(
         self,
-        category=None,
-        author=None,
+        category_data=None,
+        author_data=None,
         title='Recipe Title',
         description='description',
         slug='slug',
@@ -55,15 +55,15 @@ class TestRecipesBase(TestCase):
         is_published = True
     ):
         
-        '''if var_category ==  None:
-            var_category = {}
+        if category_data ==  None:
+            category_data = {}
         
-        if var_author == None:
-            var_author = {}'''
+        if author_data == None:
+            author_data = {}
         
         return Recipe.objects.create(
-            category=self.make_category(),
-            author=self.make_author(),
+            category=self.make_category(**category_data),
+            author=self.make_author(**author_data),
             title = title,
             description = description,
             slug = slug,
